@@ -1,4 +1,5 @@
 import XHRInterface, { Options } from '@ilovepdf/ilovepdf-core/dist/utils/XHRInterface';
+import { stat } from 'fs';
 
 // Use XMLHttpRequest wrapper due to it does not exist in NodeJS.
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
@@ -39,12 +40,26 @@ export default class XHRPromise implements XHRInterface {
                 }
                 else {
                     // Error but with response.
-                    const { error } = JSON.parse(this.responseText);
-                    const { code, message } = error;
+                    const parsedResponse = JSON.parse(this.responseText);
+                    // Servers haven't got a unique error response.
+                    const { error, name, message } = parsedResponse;
+
+                    let status;
+                    let statusText;
+
+                    if (!!error) {
+                        const { code, message } = error;
+                        status = code;
+                        statusText = message;
+                    }
+                    else {
+                        status = this.status;
+                        statusText = `${ name } - ${ message }`;
+                    }
 
                     reject({
-                        status: code,
-                        statusText: message
+                        status,
+                        statusText
                     });
                 }
             };
