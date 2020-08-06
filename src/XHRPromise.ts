@@ -1,102 +1,132 @@
 import XHRInterface, { Options } from '@ilovepdf/ilovepdf-core/dist/utils/XHRInterface';
-import { stat } from 'fs';
+import ILovePDFFile from './ILovePDFFile';
+import axios, { AxiosRequestConfig, ResponseType } from 'axios';
+import FormData from 'form-data';
 
 // Use XMLHttpRequest wrapper due to it does not exist in NodeJS.
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
+type HTTP_VERB = 'GET' | 'POST' | 'PUT' | 'DELETE' ;
+
 export default class XHRPromise implements XHRInterface {
 
-    public get<T>(url: string, options?: Options) {
+    public get<T>(url: string, options: Options = {}) {
         return XHRPromise.makeRequest<T>('GET', url, undefined, options);
     }
 
-    public post<T>(url: string, data?: any, options?: Options) {
-        return XHRPromise.makeRequest<T>('POST', url, JSON.stringify(data), options);
+    public post<T>(url: string, data?: any, options: Options = {}) {
+        let injectedData = data;
+        let injectedOptions = options;
+        // If it is a file, it has special treatment with HTTP extracting its data.
+        if (data instanceof ILovePDFFile) {
+            [ injectedData, injectedOptions ] = this.injectRequestInformation(data, options);
+        }
+
+        return XHRPromise.makeRequest<T>('POST', url, injectedData, injectedOptions);
     }
 
-    public put<T>(url: string, data?: any, options?: Options) {
-        return XHRPromise.makeRequest<T>('PUT', url, JSON.stringify(data), options);
+    // ILovePDFFiles has to be sent with a specific HTTP configuration.
+    private injectRequestInformation(data: ILovePDFFile, options: Options): [ Buffer, Options ] {
+
+        // Access to "native" data.
+        const formData = data.data;
+        const injectedData = formData.getBuffer();
+        const extraHeaders = formData.getHeaders();
+
+        // 'form-data' package returns Content-Type as content-type. This is an
+        // error due to the first words have to be in upper-case. We fix this here.
+        extraHeaders['Content-Type'] = extraHeaders['content-type'];
+        delete extraHeaders['content-type'];
+        // Inject new headers with old headers.
+        let headersArray = !!options.headers ? options.headers : [];
+        const headersConcat = Object.entries(extraHeaders).concat(headersArray);
+
+        // Copy object.
+        const injectedOptions = { ...options };
+        // Set binary option.
+        injectedOptions.headers = headersConcat;
+
+        return [ injectedData, injectedOptions ];
     }
 
-    public delete<T>(url: string, options?: Options) {
+    public put<T>(url: string, data?: any, options: Options = {}) {
+        return XHRPromise.makeRequest<T>('PUT', url, data, options);
+    }
+
+    public delete<T>(url: string, options: Options = {}) {
         return XHRPromise.makeRequest<T>('DELETE', url, undefined, options);
     }
 
-    private static makeRequest<T>(method: string, url: string, data?: any, options: Options = {}): Promise<T> {
-        return new Promise<T>(function (resolve, reject) {
-            const xhr = new XMLHttpRequest();
-            xhr.open(method, url, true);
-            XHRPromise.setHeaders(xhr, options);
+    private static makeRequest<T>(method: HTTP_VERB, url: string, data?: any, options: Options = {}): Promise<T> {
+        const requestConfig = XHRPromise.getRequestConfig(options);
 
-            // Success handling.
-            xhr.onload = function () {
-                if (this.status >= 200 && this.status < 300) {
-                    // Transform response if it was configured.
-                    const { transformResponse } = options;
-                    // Use responseText due to xmlhttprequest nodejs library does not support 'response'.
-                    const response = !!transformResponse ? transformResponse(this.responseText) : this.responseText;
+        switch (method) {
+            case 'GET':
+                return XHRPromise.getRequest<T>(url, requestConfig);
 
-                    resolve(response);
-                }
-                else {
-                    // Error but with response.
-                    const parsedResponse = JSON.parse(this.responseText);
-                    // Servers haven't got a unique error response.
-                    const { error, name, message } = parsedResponse;
+            case 'POST':
+                return XHRPromise.postRequest<T>(url, requestConfig, data);
 
-                    let status;
-                    let statusText;
+            case 'PUT':
+                return XHRPromise.putRequest<T>(url, requestConfig, data);
 
-                    if (!!error) {
-                        const { code, message } = error;
-                        status = code;
-                        statusText = message;
-                    }
-                    else {
-                        status = this.status;
-                        statusText = `${ name } - ${ message }`;
-                    }
+            case 'DELETE':
+                return XHRPromise.deleteRequest<T>(url, requestConfig);
+        }
+    }
 
-                    reject({
-                        status,
-                        statusText
-                    });
-                }
-            };
-
-            // Error handling.
-            xhr.onerror = function () {
-                reject({
-                    status: this.status,
-                    statusText: this.statusText
-                });
-            };
-
-            // Send.
-            xhr.send(data);
-        })
-        .catch(error => {
-            throw error;
+    private static getRequest<T>(url: string, config: AxiosRequestConfig): Promise<T> {
+        return axios.get<T>(url, config)
+        .then(response => {
+            return response.data;
         });
     }
 
-    private static setHeaders(xhr: typeof XMLHttpRequest, options?: Options) {
-        // Content-Type header for JSON response.
-        xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    private static deleteRequest<T>(url: string, config: AxiosRequestConfig): Promise<T> {
+        return axios.delete<T>(url, config)
+        .then(response => {
+            return response.data;
+        });
+    }
 
-        // Authorization headers.
-        if (!!options) {
-            if (!!options.headers) {
-                // Mandatory to not have errors.
-                xhr.withCredentials = true;
+    private static postRequest<T>(url: string, config: AxiosRequestConfig, data?: any): Promise<T> {
+        return axios.post<T>(url, data, config)
+        .then(response => {
+            return response.data;
+        });
+    }
 
-                options.headers.forEach(([ key, value ]) => {
-                    xhr.setRequestHeader(key, value);
-                });
+    private static putRequest<T>(url: string, config: AxiosRequestConfig, data?: any): Promise<T> {
+        return axios.put<T>(url, data, config)
+        .then(response => {
+            return response.data;
+        });
+    }
 
-            }
+    private static getRequestConfig(options: Options): AxiosRequestConfig {
+        const headers: any = {};
+        if (!!options.headers) {
+            options.headers.forEach(([ key, value ]) => {
+                headers[key] = value;
+            });
+
         }
 
+        // In case of auth system, credentials are enabled by default.
+        const withCredentials = !!headers['Authorization'];
+
+        // Configuration to not encode in case of binary file.
+        const responseType: ResponseType | undefined = !!options.binary ? 'arraybuffer' : 'text';
+
+        // Transform response.
+        const { transformResponse } = options;
+
+        return {
+            headers,
+            withCredentials,
+            responseType,
+            transformResponse
+        };
     }
 
 }
