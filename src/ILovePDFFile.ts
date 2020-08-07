@@ -1,13 +1,13 @@
-import BaseFile from "@ilovepdf/ilovepdf-core/dist/tasks/BaseFile";
+import BaseFile, { BaseFileParams } from "@ilovepdf/ilovepdf-core/dist/tasks/BaseFile";
 import FormData from 'form-data';
 import fs from 'fs';
 
 export default class ILovePDFFile extends BaseFile {
     private file: Buffer;
 
-    constructor(filepath: string) {
+    constructor(filepath: string, params?: BaseFileParams) {
         const basename = getBasename(filepath);
-        super('', '', basename);
+        super('', '', basename, params);
 
         const file = fs.readFileSync(filepath);
         this.file = file;
