@@ -1,10 +1,6 @@
 import XHRInterface, { Options } from '@ilovepdf/ilovepdf-core/dist/utils/XHRInterface';
 import ILovePDFFile from './ILovePDFFile';
 import axios, { AxiosRequestConfig, ResponseType } from 'axios';
-import FormData from 'form-data';
-
-// Use XMLHttpRequest wrapper due to it does not exist in NodeJS.
-const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 type HTTP_VERB = 'GET' | 'POST' | 'PUT' | 'DELETE' ;
 
