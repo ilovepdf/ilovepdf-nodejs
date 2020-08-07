@@ -26,19 +26,18 @@ npm install @ilovepdf/ilovepdf-nodejs
 
 ## Getting Started
 
-Simple usage looks like:
+### Using public URLs
 
 ```js
 import ILovePDFApi from '@ilovepdf/ilovepdf-nodejs';
 
 const instance = new ILovePDFApi('<PUBLIC_KEY>', '<PRIVATE_KEY>');
 
-// We want to merge two PDFs.
+// Public and secret key can be found in your developer panel
+// at https://developer.ilovepdf.com/user/projects .
 const task = instance.newTask('merge');
 
-// Async calls using promises.
-// Also, it can be used the 'await' keyword:
-// const startResult = await task.start();
+// Promise-based way to use ILovePDFApi.
 task.start()
 .then(() => {
     return task.upload('<PDF_URL1>');
@@ -55,6 +54,51 @@ task.start()
 .then((data) => {
     console.log('DONE');
 });
+```
+
+### Using ILovePDFFile class
+
+```js
+import ILovePDFApi from '@ilovepdf/ilovepdf-nodejs';
+import ILovePDFFile from '@ilovepdf/ilovepdf-frontend/dist/ILovePDFFile';
+
+const instance = new ILovePDFApi('<PUBLIC_KEY>', '<PRIVATE_KEY>');
+
+const task = instance.newTask('merge');
+
+task.start()
+.then(() => {
+    const inputElement = document.getElementById('file-element') as HTMLInputElement;
+    const file = new ILovePDFFile(inputElement.files![0]);
+
+    return task.upload(file);
+})
+.then(() => {
+    return task.upload('<PDF_URL2>');
+})
+.then(() => {
+    return task.process();
+})
+.then(() => {
+    return task.download();
+})
+.then((data) => {
+    console.log('DONE');
+});
+```
+
+### Use sync calls
+
+Thanks to be a promise-based API it is possible use the `await` JavaScript operator in order to call Task methods. Here you have an example:
+
+```js
+    let task = instance.newTask('merge');
+    task = await task.start();
+    task = await task.upload('<PDF_URL1>');
+    task = await task.upload('<PDF_URL2>');
+    task = await task.process();
+
+    const data = await task.download();
 ```
 
 ## Documentation
