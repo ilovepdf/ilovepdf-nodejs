@@ -60,7 +60,7 @@ task.start()
 
 ```js
 import ILovePDFApi from '@ilovepdf/ilovepdf-nodejs';
-import ILovePDFFile from '@ilovepdf/ilovepdf-frontend/dist/ILovePDFFile';
+import ILovePDFFile from '@ilovepdf/ilovepdf-backend/dist/ILovePDFFile';
 
 const instance = new ILovePDFApi('<PUBLIC_KEY>', '<PRIVATE_KEY>');
 
@@ -68,8 +68,7 @@ const task = instance.newTask('merge');
 
 task.start()
 .then(() => {
-    const inputElement = document.getElementById('file-element') as HTMLInputElement;
-    const file = new ILovePDFFile(inputElement.files![0]);
+    const file = new ILovePDFFile('C:/file.pdf');
 
     return task.upload(file);
 })
