@@ -31,7 +31,7 @@ npm install @ilovepdf/ilovepdf-nodejs
 ```js
 import ILovePDFApi from '@ilovepdf/ilovepdf-nodejs';
 
-const instance = new ILovePDFApi('<PUBLIC_KEY>', '<PRIVATE_KEY>');
+const instance = new ILovePDFApi('<PUBLIC_KEY>', '<SECRET_KEY>');
 
 // Public and secret key can be found in your developer panel
 // at https://developer.ilovepdf.com/user/projects .
