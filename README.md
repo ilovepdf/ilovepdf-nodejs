@@ -62,7 +62,7 @@ task.start()
 import ILovePDFApi from '@ilovepdf/ilovepdf-nodejs';
 import ILovePDFFile from '@ilovepdf/ilovepdf-nodejs/dist/ILovePDFFile';
 
-const instance = new ILovePDFApi('<PUBLIC_KEY>', '<PRIVATE_KEY>');
+const instance = new ILovePDFApi('<PUBLIC_KEY>', '<SECRET_KEY>');
 
 const task = instance.newTask('merge');
 
