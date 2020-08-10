@@ -108,9 +108,6 @@ export default class XHRPromise implements XHRInterface {
 
         }
 
-        // In case of auth system, credentials are enabled by default.
-        const withCredentials = !!headers['Authorization'];
-
         // Configuration to not encode in case of binary file.
         const responseType: ResponseType | undefined = !!options.binary ? 'arraybuffer' : 'text';
 
@@ -119,7 +116,6 @@ export default class XHRPromise implements XHRInterface {
 
         return {
             headers,
-            withCredentials,
             responseType,
             transformResponse
         };
