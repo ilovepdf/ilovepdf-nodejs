@@ -41,3 +41,6 @@ jobs:
       working-directory: ./ilovepdf-nodejs
     - run: npm test
       working-directory: ./ilovepdf-nodejs
+      env:
+        PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
