@@ -25,6 +25,7 @@
     "typescript": "^3.8.3"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "testTimeout": 10000
   }
 }
