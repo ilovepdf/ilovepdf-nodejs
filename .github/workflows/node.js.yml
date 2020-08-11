@@ -19,10 +19,21 @@ jobs:
         node-version: [ 12.x ]
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Clone @ilovepdf/ilovepdf-nodejs
+      uses: actions/checkout@v2
+      with:
+        path: ./ilovepdf-nodejs
+    - name: Clone @ilovepdf/ilovepdf-core
+      uses: actions/checkout@v2
+      with:
+        path: ./ilovepdf-core
+        repository: diego-ilovepdf/ilovepdf-core
+        token: ${{ secrets.token }}
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
+      working-directory: ./ilovepdf-nodejs
     - run: npm test
+      working-directory: ./ilovepdf-nodejs
