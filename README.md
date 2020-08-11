@@ -103,7 +103,3 @@ Thanks to be a promise-based API it is possible use the `await` JavaScript opera
 ## Documentation
 
 Please see https://developer.ilovepdf.com/docs for up-to-date documentation.
-
-<!-- TALK WITH MARCO OR ALEIX -->
-<!-- ## License
-The code is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT). -->
