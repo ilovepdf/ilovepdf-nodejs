@@ -7,6 +7,7 @@ import XHRInterface from '@ilovepdf/ilovepdf-core/dist/utils/XHRInterface';
 import globals from '@ilovepdf/ilovepdf-core/dist/constants/globals.json';
 import { TaskParams } from "@ilovepdf/ilovepdf-core/dist/tasks/Task";
 import TaskI from "@ilovepdf/ilovepdf-core/dist/tasks/TaskI";
+import TaskTypeNotExistsError from '@ilovepdf/ilovepdf-core/dist/errors/TaskTypeNotExistsError';
 
 export interface ILovePDFApiI {
     newTask: (taskType: ILovePDFTool, params?: TaskParams) => TaskI;
@@ -72,10 +73,22 @@ export default class ILovePDFApi implements ILovePDFApiI {
             }
         )
         .then(response => {
-            const fileArray = response.map(data => (
-                // In this call, files are not included.
-                this.newTask(data.tool, { id: data.task, server: data.server })
-            ));
+            const fileArray = [];
+
+            for (const taskJSON of response) {
+                try {
+                    const task = this.newTask(taskJSON.tool,
+                        {
+                            id: taskJSON.task,
+                            server: taskJSON.server
+                        });
+                    fileArray.push(task);
+                }
+                catch (error) {
+                    // In case of not exist the tool, don't include and continue.
+                    if (!(error instanceof TaskTypeNotExistsError)) throw error;
+                }
+            }
 
             return fileArray;
         });
