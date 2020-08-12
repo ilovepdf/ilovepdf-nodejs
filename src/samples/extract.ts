@@ -21,5 +21,6 @@ task.start()
     return task.download();
 })
 .then((data) => {
+    // Plain text.
     fs.writeFileSync('<FILE_PATH>', data);
 });

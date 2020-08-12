@@ -27,5 +27,6 @@ task.start()
     return pdfjpgTask.download();
 })
 .then(data => {
+    // JPG file.
     fs.writeFileSync('<FILE_PATH>', data);
 });
