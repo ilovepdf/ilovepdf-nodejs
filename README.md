@@ -40,10 +40,10 @@ const task = instance.newTask('merge');
 // Promise-based way to use ILovePDFApi.
 task.start()
 .then(() => {
-    return task.upload('<PDF_URL1>');
+    return task.upload('<FILE_URL>');
 })
 .then(() => {
-    return task.upload('<PDF_URL2>');
+    return task.upload('<FILE_URL>');
 })
 .then(() => {
     return task.process();
@@ -68,12 +68,12 @@ const task = instance.newTask('merge');
 
 task.start()
 .then(() => {
-    const file = new ILovePDFFile('C:/file.pdf');
+    const file = new ILovePDFFile('<FILE_PATH>');
 
     return task.upload(file);
 })
 .then(() => {
-    return task.upload('<PDF_URL2>');
+    return task.upload('<FILE_URL>');
 })
 .then(() => {
     return task.process();
@@ -93,8 +93,8 @@ Thanks to be a promise-based API it is possible use the `await` JavaScript opera
 ```js
     let task = instance.newTask('merge');
     task = await task.start();
-    task = await task.upload('<PDF_URL1>');
-    task = await task.upload('<PDF_URL2>');
+    task = await task.upload('<FILE_URL>');
+    task = await task.upload('<FILE_URL>');
     task = await task.process();
 
     const data = await task.download();
