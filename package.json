@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "build": "tsc",
-    "test": "jest ./src"
+    "test": "jest ./src --detectOpenHandles"
   },
   "dependencies": {
     "@ilovepdf/ilovepdf-core": "file:../ilovepdf-core",
