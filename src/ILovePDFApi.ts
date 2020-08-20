@@ -12,9 +12,25 @@ import TaskTypeNotExistsError from '@ilovepdf/ilovepdf-core/dist/errors/TaskType
 import ILovePDFCoreApi, { UpdateSignerData } from '@ilovepdf/ilovepdf-core/dist/ILovePDFCoreApi';
 
 export interface ILovePDFApiI {
+    /**
+     * Creates a new task for a specific tool.
+     * @param taskType - Task to run.
+     * @param params - Parameters for the tool.
+     */
     newTask: (taskType: ILovePDFTool, params?: TaskParams) => TaskI;
+    /**
+     * Returns a task from ILovePDF servers.
+     */
     getTask: (taskId: string) => Promise<TaskI>;
+    /**
+     * Returns a task lists from ILovePDF servers ordered from newest to older.
+     */
     listTasks: (params?: ILovePDFApiParams) => Promise< Array<TaskI> >;
+    /**
+     * Updates a signer that was processed and it is inside ILovePDF servers.
+     * @param signerToken - Token of the signer that has to be updated.
+     * @param data - Object with values to change.
+     */
     updateSigner: (signerToken: string, data: UpdateSignerData) => Promise<GetSignerResponse>;
 }
 
