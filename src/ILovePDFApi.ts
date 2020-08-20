@@ -2,17 +2,20 @@ import TaskFactory, { TaskFactoryI } from "@ilovepdf/ilovepdf-core/dist/tasks/Ta
 import Auth from "@ilovepdf/ilovepdf-core/dist/auth/Auth";
 import JWT from "@ilovepdf/ilovepdf-core/dist/auth/JWT";
 import ILovePDFTool from "@ilovepdf/ilovepdf-core/dist/types/ILovePDFTool";
+import GetSignerResponse from "@ilovepdf/ilovepdf-core/dist/types/responses/GetSignerResponse";
 import XHRPromise from "@ilovepdf/ilovepdf-core/dist/utils/XHRPromise";
 import XHRInterface from '@ilovepdf/ilovepdf-core/dist/utils/XHRInterface';
 import globals from '@ilovepdf/ilovepdf-core/dist/constants/globals.json';
 import { TaskParams } from "@ilovepdf/ilovepdf-core/dist/tasks/Task";
 import TaskI from "@ilovepdf/ilovepdf-core/dist/tasks/TaskI";
 import TaskTypeNotExistsError from '@ilovepdf/ilovepdf-core/dist/errors/TaskTypeNotExistsError';
+import ILovePDFCoreApi, { UpdateSignerData } from '@ilovepdf/ilovepdf-core/dist/ILovePDFCoreApi';
 
 export interface ILovePDFApiI {
     newTask: (taskType: ILovePDFTool, params?: TaskParams) => TaskI;
     getTask: (taskId: string) => Promise<TaskI>;
     listTasks: (params?: ILovePDFApiParams) => Promise< Array<TaskI> >;
+    updateSigner: (signerToken: string, data: UpdateSignerData) => Promise<GetSignerResponse>;
 }
 
 type ILovePDFApiParams = {
@@ -92,6 +95,10 @@ export default class ILovePDFApi implements ILovePDFApiI {
 
             return fileArray;
         });
+    }
+
+    public async updateSigner(signerToken: string, data: UpdateSignerData) {
+        return ILovePDFCoreApi.updateSigner(this.auth, this.xhr, signerToken, data);
     }
 
 }

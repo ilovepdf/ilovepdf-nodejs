@@ -52,9 +52,6 @@ describe('ILovePDFApi', () => {
                 return task.process();
             })
             .then(() => {
-                // Force to get an Id due to architecture
-                // can't be touched.
-                const id = (task as any).id as string;
                 return api.listTasks();
             })
             .then(data => {
