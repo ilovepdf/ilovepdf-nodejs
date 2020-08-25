@@ -11,55 +11,55 @@ const api = new ILovePDFApi(process.env.PUBLIC_KEY!, process.env.SECRET_KEY!);
 
 describe('ILovePDFApi', () => {
 
-    describe('Api', () => {
+    it('gets a Task', () => {
+        const task = api.newTask('merge');
 
-        it('gets a Task', () => {
-            const task = api.newTask('merge');
-
-            return task.start()
-            .then(() => {
-                const file = new ILovePDFFile(path.resolve(__dirname, './tests/input/sample.pdf'));
-                return task.addFile(file);
-            })
-            .then(() => {
-                const file = new ILovePDFFile(path.resolve(__dirname, './tests/input/sample.pdf'));
-                return task.addFile(file);
-            })
-            .then(() => {
-                return task.process();
-            })
-            .then(() => {
-                // Force to get an Id due to architecture
-                // can't be touched.
-                const id = task.responses.start?.task!;
-                return api.getTask(id);
-            });
+        return task.start()
+        .then(() => {
+            const file = new ILovePDFFile(path.resolve(__dirname, './tests/input/sample.pdf'));
+            return task.addFile(file);
+        })
+        .then(() => {
+            const file = new ILovePDFFile(path.resolve(__dirname, './tests/input/sample.pdf'));
+            return task.addFile(file);
+        })
+        .then(() => {
+            return task.process();
+        })
+        .then(() => {
+            // Force to get an Id due to architecture
+            // can't be touched.
+            const id = task.responses.start?.task!;
+            return api.getTask(id);
         });
+    });
 
-        it('gets a list of Task', () => {
-            const task = api.newTask('merge');
+    it('gets a list of Task', () => {
+        const task = api.newTask('merge');
 
-            return task.start()
-            .then(() => {
-                const file = new ILovePDFFile(path.resolve(__dirname, './tests/input/sample.pdf'));
-                return task.addFile(file);
-            })
-            .then(() => {
-                const file = new ILovePDFFile(path.resolve(__dirname, './tests/input/sample.pdf'));
-                return task.addFile(file);
-            })
-            .then(() => {
-                return task.process();
-            })
-            .then(() => {
-                return api.listTasks();
-            })
-            .then(data => {
-                // At this point, there is minimum one task.
-                const task = data[0];
-                expect(task).toBeInstanceOf(Task);
-            });
+        return task.start()
+        .then(() => {
+            const file = new ILovePDFFile(path.resolve(__dirname, './tests/input/sample.pdf'));
+            return task.addFile(file);
+        })
+        .then(() => {
+            const file = new ILovePDFFile(path.resolve(__dirname, './tests/input/sample.pdf'));
+            return task.addFile(file);
+        })
+        .then(() => {
+            return task.process();
+        })
+        .then(() => {
+            return api.listTasks();
+        })
+        .then(data => {
+            // At this point, there is minimum one task.
+            const task = data[0];
+            expect(task).toBeInstanceOf(Task);
         });
+    });
+
+    describe('Api params', () => {
 
         it('process a task with file_key_encryption', async () => {
             const apiWithFileEncryption = new ILovePDFApi(process.env.PUBLIC_KEY!, process.env.SECRET_KEY!, { file_encryption_key: '01234567890123' });
