@@ -15,9 +15,8 @@ export interface ILovePDFApiI {
     /**
      * Creates a new task for a specific tool.
      * @param taskType - Task to run.
-     * @param params - Parameters for the tool.
      */
-    newTask: (taskType: ILovePDFTool, params?: TaskParams) => TaskI;
+    newTask: (taskType: ILovePDFTool) => TaskI;
     /**
      * Returns a task from ILovePDF servers.
      */
@@ -25,7 +24,7 @@ export interface ILovePDFApiI {
     /**
      * Returns a task lists from ILovePDF servers ordered from newest to older.
      */
-    listTasks: (params?: ILovePDFApiParams) => Promise< Array<TaskI> >;
+    listTasks: (params?: ListTasksParams) => Promise< Array<TaskI> >;
     /**
      * Updates a signer that was processed and it is inside ILovePDF servers.
      * @param signerToken - Token of the signer that has to be updated.
@@ -34,7 +33,11 @@ export interface ILovePDFApiI {
     updateSigner: (signerToken: string, data: UpdateSignerData) => Promise<GetSignerResponse>;
 }
 
-type ILovePDFApiParams = {
+export type ILovePDFApiParams = {
+    file_encryption_key?: string
+};
+
+type ListTasksParams = {
     page?: number;
     tool?: string;
     status?: string;
@@ -46,15 +49,15 @@ export default class ILovePDFApi implements ILovePDFApiI {
     private xhr: XHRInterface;
     private taskFactory: TaskFactoryI;
 
-    constructor(publicKey: string, secretKey: string) {
+    constructor(publicKey: string, secretKey: string, params: ILovePDFApiParams = {}) {
         this.xhr = new XHRPromise;
         // Secret key is set for
-        this.auth = new JWT(this.xhr, publicKey, secretKey);
+        this.auth = new JWT(this.xhr, publicKey, secretKey, params);
         this.taskFactory = new TaskFactory();
     }
 
-    public newTask(taskType: ILovePDFTool, params: TaskParams = {}) {
-        return this.taskFactory.newTask(taskType, this.auth, this.xhr, params);
+    public newTask(taskType: ILovePDFTool) {
+        return this.taskFactory.newTask(taskType, this.auth, this.xhr);
     }
 
     public async getTask(taskId: string) {
@@ -75,7 +78,7 @@ export default class ILovePDFApi implements ILovePDFApiI {
         });
     }
 
-    public async listTasks(params: ILovePDFApiParams = {}) {
+    public async listTasks(params: ListTasksParams = {}) {
         const token = await this.auth.getToken();
 
         return this.xhr.post<ListTasksResponse>(
@@ -96,7 +99,9 @@ export default class ILovePDFApi implements ILovePDFApiI {
 
             for (const taskJSON of response) {
                 try {
-                    const task = this.newTask(taskJSON.tool,
+                    const task = this.taskFactory.newTask(taskJSON.tool,
+                        this.auth,
+                        this.xhr,
                         {
                             id: taskJSON.task,
                             server: taskJSON.server
