@@ -6,10 +6,10 @@ import GetSignerResponse from "@ilovepdf/ilovepdf-core/dist/types/responses/GetS
 import XHRPromise from "@ilovepdf/ilovepdf-core/dist/utils/XHRPromise";
 import XHRInterface from '@ilovepdf/ilovepdf-core/dist/utils/XHRInterface';
 import globals from '@ilovepdf/ilovepdf-core/dist/constants/globals.json';
-import { TaskParams } from "@ilovepdf/ilovepdf-core/dist/tasks/Task";
 import TaskI from "@ilovepdf/ilovepdf-core/dist/tasks/TaskI";
 import TaskTypeNotExistsError from '@ilovepdf/ilovepdf-core/dist/errors/TaskTypeNotExistsError';
 import ILovePDFCoreApi, { UpdateSignerData } from '@ilovepdf/ilovepdf-core/dist/ILovePDFCoreApi';
+import GetSignatureTemplateResponse from "@ilovepdf/ilovepdf-core/dist/types/responses/GetSignatureTemplateResponse";
 
 export interface ILovePDFApiI {
     /**
@@ -31,6 +31,11 @@ export interface ILovePDFApiI {
      * @param data - Object with values to change.
      */
     updateSigner: (signerToken: string, data: UpdateSignerData) => Promise<GetSignerResponse>;
+    /**
+     * Gets a template previously created.
+     * @param templateId - Id of the template to get.
+     */
+    getSignatureTemplate: (templateId: string) => Promise<GetSignatureTemplateResponse>;
 }
 
 export type ILovePDFApiParams = {
@@ -120,6 +125,10 @@ export default class ILovePDFApi implements ILovePDFApiI {
 
     public async updateSigner(signerToken: string, data: UpdateSignerData) {
         return ILovePDFCoreApi.updateSigner(this.auth, this.xhr, signerToken, data);
+    }
+
+    public async getSignatureTemplate(templateId: string) {
+        return ILovePDFCoreApi.getSignatureTemplate(this.auth, this.xhr, templateId);
     }
 
 }
