@@ -27,8 +27,6 @@ describe('ILovePDFApi', () => {
             return task.process();
         })
         .then(() => {
-            // Force to get an Id due to architecture
-            // can't be touched.
             const id = task.responses.start?.task!;
             return api.getTask(id);
         });
