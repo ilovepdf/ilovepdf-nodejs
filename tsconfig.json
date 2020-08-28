@@ -12,5 +12,6 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "declaration": true
-  }
+  },
+  "exclude": [ "dist", "**/*/*.test.ts" ]
 }
