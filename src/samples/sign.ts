@@ -13,13 +13,13 @@ const task = instance.newTask('sign') as SignTask;
 
 task.start()
 .then(() => {
-    return task.addFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
+    return task.addFile('<FILE_URL>');
 })
 .then(() => {
     // Requester is the person who sends the document to sign.
     task.requester = {
         name: 'Diego',
-        email: 'diego.lao@ilovepdf.com'
+        email: 'email@totest.com'
     };
 
     const file = task.getFiles()[0];
@@ -37,7 +37,7 @@ task.start()
 
     // Signer is the person who signs. Requester and signer can be the
     // same person.
-    const signer = new Signer('Diego Signer', 'diego.lao@ilovepdf.com', {
+    const signer = new Signer('Diego', 'email@totest.com', {
         type: 'signer',
         force_signature_type: 'all'
     });
