@@ -56,4 +56,5 @@ task.start()
     const newSignature = api.newTask('sign') as SignTask;
     await newSignature.start()
     await newSignature.processFromTemplate(template);
+    console.log('DONE');
 });
