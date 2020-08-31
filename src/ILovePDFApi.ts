@@ -60,10 +60,16 @@ export default class ILovePDFApi implements ILovePDFApiI {
         this.taskFactory = new TaskFactory();
     }
 
+    /**
+     * @inheritdoc
+     */
     public newTask(taskType: ILovePDFTool) {
         return this.taskFactory.newTask(taskType, this.auth, this.xhr);
     }
 
+    /**
+     * @inheritdoc
+     */
     public async getTask(taskId: string) {
         const token = await this.auth.getToken();
 
@@ -82,6 +88,9 @@ export default class ILovePDFApi implements ILovePDFApiI {
         });
     }
 
+    /**
+     * @inheritdoc
+     */
     public async listTasks(params: ListTasksParams = {}) {
         const token = await this.auth.getToken();
 
