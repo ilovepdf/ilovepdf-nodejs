@@ -1,15 +1,14 @@
-import TaskFactory, { TaskFactoryI } from "@ilovepdf/ilovepdf-core/dist/tasks/TaskFactory";
-import Auth from "@ilovepdf/ilovepdf-core/dist/auth/Auth";
-import JWT from "@ilovepdf/ilovepdf-core/dist/auth/JWT";
-import ILovePDFTool from "@ilovepdf/ilovepdf-core/dist/types/ILovePDFTool";
-import XHRPromise from "@ilovepdf/ilovepdf-core/dist/utils/XHRPromise";
-import XHRInterface from '@ilovepdf/ilovepdf-core/dist/utils/XHRInterface';
-import globals from '@ilovepdf/ilovepdf-core/dist/constants/globals.json';
-import TaskI from "@ilovepdf/ilovepdf-core/dist/tasks/TaskI";
-import TaskTypeNotExistsError from '@ilovepdf/ilovepdf-core/dist/errors/TaskTypeNotExistsError';
-import ILovePDFCoreApi from '@ilovepdf/ilovepdf-core/dist/ILovePDFCoreApi';
-import GetSignatureTemplateResponse from "@ilovepdf/ilovepdf-core/dist/types/responses/GetSignatureTemplateResponse";
-import SignTask, { TemplateElement } from "@ilovepdf/ilovepdf-core/dist/tasks/sign/SignTask";
+import TaskFactory, { TaskFactoryI } from "@ilovepdf/ilovepdf-core/tasks/TaskFactory";
+import Auth from "@ilovepdf/ilovepdf-core/auth/Auth";
+import JWT from "@ilovepdf/ilovepdf-core/auth/JWT";
+import ILovePDFTool from "@ilovepdf/ilovepdf-core/types/ILovePDFTool";
+import XHRPromise from "@ilovepdf/ilovepdf-core/utils/XHRPromise";
+import XHRInterface from '@ilovepdf/ilovepdf-core/utils/XHRInterface';
+import globals from '@ilovepdf/ilovepdf-core/constants/globals.json';
+import TaskI from "@ilovepdf/ilovepdf-core/tasks/TaskI";
+import TaskTypeNotExistsError from '@ilovepdf/ilovepdf-core/errors/TaskTypeNotExistsError';
+import ILovePDFCoreApi from '@ilovepdf/ilovepdf-core/ILovePDFCoreApi';
+import SignTask, { TemplateElement } from "@ilovepdf/ilovepdf-core/tasks/sign/SignTask";
 
 export interface ILovePDFApiI {
     /**

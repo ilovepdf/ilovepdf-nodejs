@@ -60,7 +60,7 @@ task.start()
 
 ```js
 import ILovePDFApi from '@ilovepdf/ilovepdf-nodejs';
-import ILovePDFFile from '@ilovepdf/ilovepdf-nodejs/dist/ILovePDFFile';
+import ILovePDFFile from '@ilovepdf/ilovepdf-nodejs/ILovePDFFile';
 
 const instance = new ILovePDFApi('<PUBLIC_KEY>', '<SECRET_KEY>');
 

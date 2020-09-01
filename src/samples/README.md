@@ -16,4 +16,4 @@ You can create a separated project, copy the example and fix the import paths. H
 
 1. Set the variables explained before in all the examples that you want to execute.
 2. Re-build the project with `npm run build`.
-3. Execute the compiled example with `node ./dist/samples/<example>`.
+3. Execute the compiled example with `node ./samples/<example>`.

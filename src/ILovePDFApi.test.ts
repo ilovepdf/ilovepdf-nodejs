@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import ILovePDFApi from "./ILovePDFApi";
-import Task from '@ilovepdf/ilovepdf-core/dist/tasks/Task';
-import ILovePDFFile from '@ilovepdf/ilovepdf-core/dist/utils/ILovePDFFile';
+import Task from '@ilovepdf/ilovepdf-core/tasks/Task';
+import ILovePDFFile from '@ilovepdf/ilovepdf-core/utils/ILovePDFFile';
 import path from 'path';
 
 // Load env vars.

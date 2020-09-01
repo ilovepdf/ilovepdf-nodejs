@@ -1,7 +1,7 @@
 import ILovePDFApi from "..";
 import fs from 'fs';
 import dotenv from 'dotenv';
-import RotateTask from '@ilovepdf/ilovepdf-core/dist/tasks/RotateTask';
+import RotateTask from '@ilovepdf/ilovepdf-core/tasks/RotateTask';
 
 // Load env vars.
 dotenv.config();

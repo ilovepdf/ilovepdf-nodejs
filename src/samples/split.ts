@@ -1,7 +1,7 @@
 import ILovePDFApi from "..";
 import fs from 'fs';
 import dotenv from 'dotenv';
-import SplitTask from '@ilovepdf/ilovepdf-core/dist/tasks/SplitTask';
+import SplitTask from '@ilovepdf/ilovepdf-core/tasks/SplitTask';
 
 // Load env vars.
 dotenv.config();

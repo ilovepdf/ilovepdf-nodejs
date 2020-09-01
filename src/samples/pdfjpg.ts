@@ -1,7 +1,7 @@
 import ILovePDFApi from "..";
 import fs from 'fs';
 import dotenv from 'dotenv';
-import PdfJpgTask from '@ilovepdf/ilovepdf-core/dist/tasks/PdfJpgTask';
+import PdfJpgTask from '@ilovepdf/ilovepdf-core/tasks/PdfJpgTask';
 
 // Load env vars.
 dotenv.config();

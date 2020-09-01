@@ -1,7 +1,7 @@
 import ILovePDFApi from "..";
 import fs from 'fs';
 import dotenv from 'dotenv';
-import ExtractTask from '@ilovepdf/ilovepdf-core/dist/tasks/ExtractTask';
+import ExtractTask from '@ilovepdf/ilovepdf-core/tasks/ExtractTask';
 
 // Load env vars.
 dotenv.config();

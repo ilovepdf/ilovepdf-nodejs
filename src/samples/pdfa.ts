@@ -1,7 +1,7 @@
 import ILovePDFApi from "..";
 import fs from 'fs';
 import dotenv from 'dotenv';
-import PdfaTask from '@ilovepdf/ilovepdf-core/dist/tasks/PdfaTask';
+import PdfaTask from '@ilovepdf/ilovepdf-core/tasks/PdfaTask';
 
 // Load env vars.
 dotenv.config();

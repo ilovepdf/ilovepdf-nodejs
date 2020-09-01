@@ -1,7 +1,7 @@
 import ILovePDFApi from "..";
 import fs from 'fs';
 import dotenv from 'dotenv';
-import ProtectTask from '@ilovepdf/ilovepdf-core/dist/tasks/ProtectTask';
+import ProtectTask from '@ilovepdf/ilovepdf-core/tasks/ProtectTask';
 
 // Load env vars.
 dotenv.config();

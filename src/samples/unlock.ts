@@ -1,8 +1,8 @@
 import ILovePDFApi from "..";
 import fs from 'fs';
 import dotenv from 'dotenv';
-import UnlockTask from '@ilovepdf/ilovepdf-core/dist/tasks/UnlockTask';
-import ILovePDFFile from '@ilovepdf/ilovepdf-core/dist/utils/ILovePDFFile';
+import UnlockTask from '@ilovepdf/ilovepdf-core/tasks/UnlockTask';
+import ILovePDFFile from '@ilovepdf/ilovepdf-core/utils/ILovePDFFile';
 
 // Load env vars.
 dotenv.config();

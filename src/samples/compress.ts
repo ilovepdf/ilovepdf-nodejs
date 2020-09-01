@@ -1,7 +1,7 @@
 import ILovePDFApi from "..";
 import fs from 'fs';
 import dotenv from 'dotenv';
-import CompressTask from '@ilovepdf/ilovepdf-core/dist/tasks/CompressTask';
+import CompressTask from '@ilovepdf/ilovepdf-core/tasks/CompressTask';
 
 // Load env vars.
 dotenv.config();
