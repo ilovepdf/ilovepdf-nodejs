@@ -1,11 +1,19 @@
 {
   "name": "@ilovepdf/ilovepdf-nodejs",
+  "author": {
+    "email": "info@ilovepdf.com",
+    "name": "ILOVEPDF S.L.",
+    "url": "https://developer.ilovepdf.com/"
+  },
+  "license": "MIT",
+  "description": "ILovePDF Api - NodeJS Library",
   "version": "0.1.0",
   "main": "dist/index.js",
   "private": true,
   "scripts": {
     "build": "tsc && sed 's#dist/##' ./package.json > ./dist/package.json",
-    "test": "jest ./src --detectOpenHandles"
+    "test": "jest ./src --detectOpenHandles",
+    "prepublish": "npm run build"
   },
   "dependencies": {
     "@ilovepdf/ilovepdf-core": "file:../ilovepdf-core/dist",
