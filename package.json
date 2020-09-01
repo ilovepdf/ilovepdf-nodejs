@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "private": true,
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && sed 's#dist/##' ./package.json > ./dist/package.json",
     "test": "jest ./src --detectOpenHandles"
   },
   "dependencies": {
