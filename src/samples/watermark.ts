@@ -1,7 +1,7 @@
 import ILovePDFApi from "..";
 import fs from 'fs';
 import dotenv from 'dotenv';
-import WatermarkTask from '@ilovepdf/ilovepdf-core/tasks/WatermarkTask';
+import WatermarkTask from '@ilovepdf/ilovepdf-js-core/tasks/WatermarkTask';
 
 // Load env vars.
 dotenv.config();

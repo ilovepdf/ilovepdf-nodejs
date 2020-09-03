@@ -1,7 +1,7 @@
 import ILovePDFApi from "..";
 import fs from 'fs';
 import dotenv from 'dotenv';
-import RepairTask from '@ilovepdf/ilovepdf-core/tasks/RepairTask';
+import RepairTask from '@ilovepdf/ilovepdf-js-core/tasks/RepairTask';
 
 // Load env vars.
 dotenv.config();

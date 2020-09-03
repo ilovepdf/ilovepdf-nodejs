@@ -1,7 +1,7 @@
 import ILovePDFApi from "..";
 import dotenv from 'dotenv';
-import ValidatePdfaTask from '@ilovepdf/ilovepdf-core/tasks/ValidatePdfaTask';
-import ILovePDFFile from '@ilovepdf/ilovepdf-core/utils/ILovePDFFile';
+import ValidatePdfaTask from '@ilovepdf/ilovepdf-js-core/tasks/ValidatePdfaTask';
+import ILovePDFFile from '@ilovepdf/ilovepdf-js-core/utils/ILovePDFFile';
 
 // Load env vars.
 dotenv.config();

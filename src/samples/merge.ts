@@ -1,7 +1,7 @@
 import ILovePDFApi from "..";
 import fs from 'fs';
 import dotenv from 'dotenv';
-import MergeTask from '@ilovepdf/ilovepdf-core/tasks/MergeTask';
+import MergeTask from '@ilovepdf/ilovepdf-js-core/tasks/MergeTask';
 
 // Load env vars.
 dotenv.config();

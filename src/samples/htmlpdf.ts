@@ -1,8 +1,8 @@
 import ILovePDFApi from "..";
 import fs from 'fs';
 import dotenv from 'dotenv';
-import HtmlPdfTask from '@ilovepdf/ilovepdf-core/tasks/HtmlPdfTask';
-import ILovePDFFile from '@ilovepdf/ilovepdf-core/utils/ILovePDFFile';
+import HtmlPdfTask from '@ilovepdf/ilovepdf-js-core/tasks/HtmlPdfTask';
+import ILovePDFFile from '@ilovepdf/ilovepdf-js-core/utils/ILovePDFFile';
 
 // Load env vars.
 dotenv.config();

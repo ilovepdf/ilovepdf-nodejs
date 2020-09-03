@@ -23,7 +23,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         path: ./ilovepdf-nodejs
-    - name: Clone @ilovepdf/ilovepdf-core
+    - name: Clone @ilovepdf/ilovepdf-js-core
       uses: actions/checkout@v2
       with:
         path: ./ilovepdf-core
