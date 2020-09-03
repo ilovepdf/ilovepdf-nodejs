@@ -60,7 +60,7 @@ describe('ILovePDFApi', () => {
     describe('Api params', () => {
 
         it('process a task with file_key_encryption', async () => {
-            const apiWithFileEncryption = new ILovePDFApi(process.env.PUBLIC_KEY!, process.env.SECRET_KEY!, { file_encryption_key: '01234567890123' });
+            const apiWithFileEncryption = new ILovePDFApi(process.env.PUBLIC_KEY!, process.env.SECRET_KEY!, { file_encryption_key: '0123456789012345' });
 
             const task = apiWithFileEncryption.newTask('compress');
 
