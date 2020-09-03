@@ -1,7 +1,7 @@
 {
   "name": "@ilovepdf/ilovepdf-nodejs",
   "author": {
-    "email": "info@ilovepdf.com",
+    "email": "developer@ilovepdf.com",
     "name": "ILOVEPDF S.L.",
     "url": "https://developer.ilovepdf.com/"
   },
@@ -9,11 +9,10 @@
   "description": "ILovePDF Api - NodeJS Library",
   "version": "0.1.0",
   "main": "dist/index.js",
-  "private": true,
   "scripts": {
-    "build": "tsc && sed 's#dist/##' ./package.json > ./dist/package.json",
+    "build": "tsc && sed 's#dist/##' ./package.json > ./dist/package.json && cp README.md ./dist",
     "test": "jest ./src --detectOpenHandles",
-    "prepublish": "npm run build"
+    "upload-npm": "npm test && npm run build && cd ./dist && npm publish --access public"
   },
   "dependencies": {
     "@ilovepdf/ilovepdf-js-core": "^0.1.5",
@@ -35,5 +34,20 @@
   "jest": {
     "testEnvironment": "node",
     "testTimeout": 20000
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ilovepdf/ilovepdf-nodejs"
+  },
+  "keywords": [
+    "pdf",
+    "library",
+    "tool",
+    "merge",
+    "split",
+    "compress",
+    "convert",
+    "api",
+    "nodejs"
+  ]
 }
