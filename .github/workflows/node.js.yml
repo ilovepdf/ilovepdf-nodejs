@@ -21,26 +21,12 @@ jobs:
     steps:
     - name: Clone @ilovepdf/ilovepdf-nodejs
       uses: actions/checkout@v2
-      with:
-        path: ./ilovepdf-nodejs
-    - name: Clone @ilovepdf/ilovepdf-js-core
-      uses: actions/checkout@v2
-      with:
-        path: ./ilovepdf-core
-        repository: diego-ilovepdf/ilovepdf-core
-        token: ${{ secrets.token }}
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
-      working-directory: ./ilovepdf-core
-    - run: npm run build
-      working-directory: ./ilovepdf-core
-    - run: npm ci
-      working-directory: ./ilovepdf-nodejs
     - run: npm test
-      working-directory: ./ilovepdf-nodejs
       env:
         PUBLIC_KEY: ${{ secrets.PUBLIC_KEY }}
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
