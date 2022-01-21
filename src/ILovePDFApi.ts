@@ -17,10 +17,6 @@ export interface ILovePDFApiI {
      */
     newTask: (taskType: ILovePDFTool) => TaskI;
     /**
-     * Returns a task from ILovePDF servers.
-     */
-    getTask: (taskId: string) => Promise<TaskI>;
-    /**
      * Returns a task lists from ILovePDF servers ordered from newest to older.
      */
     listTasks: (params?: ListTasksParams) => Promise< Array<TaskI> >;
@@ -54,27 +50,6 @@ export default class ILovePDFApi implements ILovePDFApiI {
      */
     public newTask(taskType: ILovePDFTool) {
         return this.taskFactory.newTask(taskType, this.auth, this.xhr);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public async getTask(taskId: string) {
-        const token = await this.auth.getToken();
-
-        return this.xhr.get(
-            `${ globals.API_URL_PROTOCOL }://${ globals.API_URL }/${ globals.API_VERSION }/task/${ taskId }`,
-            {
-                headers: [
-                    [ 'Authorization', `Bearer ${ token }` ]
-                ],
-                transformResponse: (res: any) => { return JSON.parse(res) }
-            }
-        )
-        .then(data => {
-            // This API call causes now ALWAYS an error. It has to be fixed.
-            throw new Error(JSON.stringify(data));
-        });
     }
 
     /**

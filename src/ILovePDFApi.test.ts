@@ -11,27 +11,6 @@ const api = new ILovePDFApi(process.env.PUBLIC_KEY!, process.env.SECRET_KEY!);
 
 describe('ILovePDFApi', () => {
 
-    it('gets a Task', () => {
-        const task = api.newTask('merge');
-
-        return task.start()
-        .then(() => {
-            const file = new ILovePDFFile(path.resolve(__dirname, './tests/input/sample.pdf'));
-            return task.addFile(file);
-        })
-        .then(() => {
-            const file = new ILovePDFFile(path.resolve(__dirname, './tests/input/sample.pdf'));
-            return task.addFile(file);
-        })
-        .then(() => {
-            return task.process();
-        })
-        .then(() => {
-            const id = task.responses.start?.task!;
-            return api.getTask(id);
-        });
-    });
-
     it('gets a list of Task', () => {
         const task = api.newTask('merge');
 
