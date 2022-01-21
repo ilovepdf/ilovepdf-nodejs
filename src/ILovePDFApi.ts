@@ -94,13 +94,6 @@ export type ILovePDFApiParams = {
     file_encryption_key?: string
 };
 
-type ListTasksParams = {
-    page?: number;
-    tool?: string;
-    status?: string;
-    custom_int?: number;
-};
-
 export default class ILovePDFApi implements ILovePDFApiI {
     private auth: Auth;
     private xhr: XHRInterface;
@@ -241,6 +234,13 @@ export default class ILovePDFApi implements ILovePDFApiI {
     }
 
 }
+
+type ListTasksParams = {
+    page?: number;
+    tool?: string;
+    status?: string;
+    custom_int?: number;
+};
 
 type ListTasksResponse = Array< {
     tool: ILovePDFTool;
