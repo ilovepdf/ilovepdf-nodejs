@@ -7,8 +7,9 @@ import XHRInterface from '@ilovepdf/ilovepdf-js-core/utils/XHRInterface';
 import globals from '@ilovepdf/ilovepdf-js-core/constants/globals.json';
 import TaskI from "@ilovepdf/ilovepdf-js-core/tasks/TaskI";
 import TaskTypeNotExistsError from '@ilovepdf/ilovepdf-js-core/errors/TaskTypeNotExistsError';
-import ILovePDFCoreApi from '@ilovepdf/ilovepdf-js-core/ILovePDFCoreApi';
+import ILovePDFCoreApi, { GetSignatureStatus, GetReceiverInfoResponse } from '@ilovepdf/ilovepdf-js-core/ILovePDFCoreApi';
 import SignTask from "@ilovepdf/ilovepdf-js-core/tasks/sign/SignTask";
+import DownloadResponse from "@ilovepdf/ilovepdf-js-core/types/responses/DownloadResponse";
 
 export interface ILovePDFApiI {
     /**
@@ -20,6 +21,17 @@ export interface ILovePDFApiI {
      * Returns a task lists from ILovePDF servers ordered from newest to older.
      */
     listTasks: (params?: ListTasksParams) => Promise< Array<TaskI> >;
+    getSignatureStatus: (signatureToken: string) => Promise<GetSignatureStatus>;
+    getSignatureList: (page: number, pageLimit: number) => Promise<Array<GetSignatureStatus>>;
+    voidSignature: (signatureToken: string) => Promise< void >;
+    increaseSignatureExpirationDays: (signatureToken: string, daysAmount: number) => Promise<void>;
+    sendReminders: (signatureToken: string) => Promise<void>;
+    downloadOriginalFiles: (signatureToken: string) => Promise<DownloadResponse>;
+    downloadSignedFiles: (signatureToken: string) => Promise<DownloadResponse>;
+    downloadAuditFiles: (signatureToken: string) => Promise<DownloadResponse>;
+    getReceiverInfo: (receiverTokenRequester: string) => Promise<GetReceiverInfoResponse>;
+    fixReceiverEmail: (receiverTokenRequester: string, email: string) => Promise< void >;
+    fixReceiverPhone: (receiverTokenRequester: string, phone: string) => Promise< void >;
 }
 
 export type ILovePDFApiParams = {
@@ -48,14 +60,14 @@ export default class ILovePDFApi implements ILovePDFApiI {
     /**
      * @inheritdoc
      */
-    public newTask(taskType: ILovePDFTool) {
+    newTask(taskType: ILovePDFTool) {
         return this.taskFactory.newTask(taskType, this.auth, this.xhr);
     }
 
     /**
      * @inheritdoc
      */
-    public async listTasks(params: ListTasksParams = {}) {
+    async listTasks(params: ListTasksParams = {}) {
         const token = await this.auth.getToken();
 
         return this.xhr.post<ListTasksResponse>(
@@ -95,9 +107,51 @@ export default class ILovePDFApi implements ILovePDFApiI {
         });
     }
 
-}
+    async getSignatureStatus(signatureToken: string): Promise<GetSignatureStatus> {
+        return ILovePDFCoreApi.getSignatureStatus(this.auth, this.xhr, signatureToken);
+    }
 
-// ILovePDF type responses from API.
+    async getSignatureList(page: number = 0, pageLimit: number = 20): Promise<Array<GetSignatureStatus>> {
+        return ILovePDFCoreApi.getSignatureList(this.auth, this.xhr, page, pageLimit);
+    }
+
+    async voidSignature(signatureToken: string): Promise< void > {
+        return ILovePDFCoreApi.voidSignature(this.auth, this.xhr, signatureToken);
+    }
+
+    async increaseSignatureExpirationDays(signatureToken: string, daysAmount: number): Promise<void> {
+        return ILovePDFCoreApi.increaseSignatureExpirationDays(this.auth, this.xhr, signatureToken, daysAmount);
+    }
+
+    async sendReminders(signatureToken: string): Promise<void> {
+        return ILovePDFCoreApi.sendReminders(this.auth, this.xhr, signatureToken);
+    }
+
+    async downloadOriginalFiles(signatureToken: string): Promise<DownloadResponse> {
+        return ILovePDFCoreApi.downloadOriginalFiles(this.auth, this.xhr, signatureToken);
+    }
+
+    async downloadSignedFiles(signatureToken: string): Promise<DownloadResponse> {
+        return ILovePDFCoreApi.downloadSignedFiles(this.auth, this.xhr, signatureToken);
+    }
+
+    async downloadAuditFiles(signatureToken: string): Promise<DownloadResponse> {
+        return ILovePDFCoreApi.downloadAuditFiles(this.auth, this.xhr, signatureToken);
+    }
+
+    async getReceiverInfo(receiverTokenRequester: string): Promise<GetReceiverInfoResponse> {
+        return ILovePDFCoreApi.getReceiverInfo(this.auth, this.xhr, receiverTokenRequester);
+    }
+
+    async fixReceiverEmail(receiverTokenRequester: string, email: string): Promise< void > {
+        return ILovePDFCoreApi.fixReceiverEmail(this.auth, this.xhr, receiverTokenRequester, email);
+    }
+
+    async fixReceiverPhone(receiverTokenRequester: string, phone: string): Promise< void > {
+        return ILovePDFCoreApi.fixReceiverPhone(this.auth, this.xhr, receiverTokenRequester, phone);
+    }
+
+}
 
 type ListTasksResponse = Array< {
     tool: ILovePDFTool;
@@ -114,5 +168,3 @@ type ListTasksResponse = Array< {
     file_number: string;
     download_filename: string;
 } >;
-
-// -----
