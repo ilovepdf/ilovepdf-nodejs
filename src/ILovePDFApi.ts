@@ -8,7 +8,7 @@ import globals from '@ilovepdf/ilovepdf-js-core/constants/globals.json';
 import TaskI from "@ilovepdf/ilovepdf-js-core/tasks/TaskI";
 import TaskTypeNotExistsError from '@ilovepdf/ilovepdf-js-core/errors/TaskTypeNotExistsError';
 import ILovePDFCoreApi from '@ilovepdf/ilovepdf-js-core/ILovePDFCoreApi';
-import SignTask, { TemplateElement } from "@ilovepdf/ilovepdf-js-core/tasks/sign/SignTask";
+import SignTask from "@ilovepdf/ilovepdf-js-core/tasks/sign/SignTask";
 
 export interface ILovePDFApiI {
     /**
@@ -24,16 +24,6 @@ export interface ILovePDFApiI {
      * Returns a task lists from ILovePDF servers ordered from newest to older.
      */
     listTasks: (params?: ListTasksParams) => Promise< Array<TaskI> >;
-    /**
-     * Retrieves a signature template.
-     * @param templateTaskId - Task id of the task that created the template.
-     */
-    getSignatureTemplate: (templateTaskId: string) => Promise<TemplateElement>;
-    /**
-     * Retrieves a signature task.
-     * @param signatureTaskId - Signature task id.
-     */
-    getSignature: (signatureTaskId: string) => Promise<SignTask>;
 }
 
 export type ILovePDFApiParams = {
@@ -128,20 +118,6 @@ export default class ILovePDFApi implements ILovePDFApiI {
 
             return fileArray;
         });
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public async getSignatureTemplate(templateTaskId: string) {
-        return ILovePDFCoreApi.getSignatureTemplate(this.auth, this.xhr, templateTaskId);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public async getSignature(signatureTaskId: string): Promise<SignTask> {
-        return ILovePDFCoreApi.getSignature(this.auth, this.xhr, signatureTaskId);
     }
 
 }
