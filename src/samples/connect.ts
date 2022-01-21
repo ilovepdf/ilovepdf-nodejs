@@ -20,11 +20,10 @@ task.start()
 .then(() => {
     return task.connect('pdfjpg');
 })
-.then(pdfjpgTask => {
-    return pdfjpgTask.process();
-})
-.then(pdfjpgTask => {
-    return pdfjpgTask.download();
+.then(async(pdfjpgTask) => {
+    // Process this task individually and download.
+    await pdfjpgTask.process();
+    return pdfjpgTask.download()
 })
 .then(data => {
     // JPG file.

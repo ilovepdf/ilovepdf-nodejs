@@ -14,8 +14,7 @@ task.start()
 .then(() => {
     return task.addFile('<FILE_URL>');
 })
-.then(() => {
-    const file = task.getFiles()[0];
+.then(file => {
     file.params.rotate = 90;
 
     return task.process();

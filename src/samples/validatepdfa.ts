@@ -18,8 +18,8 @@ task.start()
 .then(() => {
     return task.process({ conformance: 'pdfa-2a' });
 })
-.then(() => {
+.then(({ validations }) => {
     // PDF Validation does not have any download. You must see
     // the server response directly.
-    console.log(task.responses.process?.validations);
+    console.log(validations);
 });
