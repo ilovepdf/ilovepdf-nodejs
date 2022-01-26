@@ -8,7 +8,6 @@ import globals from '@ilovepdf/ilovepdf-js-core/constants/globals.json';
 import TaskI from "@ilovepdf/ilovepdf-js-core/tasks/TaskI";
 import TaskTypeNotExistsError from '@ilovepdf/ilovepdf-js-core/errors/TaskTypeNotExistsError';
 import ILovePDFCoreApi, { GetSignatureStatus, GetReceiverInfoResponse } from '@ilovepdf/ilovepdf-js-core/ILovePDFCoreApi';
-import DownloadResponse from "@ilovepdf/ilovepdf-js-core/types/responses/DownloadResponse";
 
 export interface ILovePDFApiI {
     /**
@@ -56,20 +55,20 @@ export interface ILovePDFApiI {
      * @param signatureToken token_requester property from a created signature.
      * @returns PDF or ZIP file with the original files.
      */
-    downloadOriginalFiles: (signatureToken: string) => Promise<DownloadResponse>;
+    downloadOriginalFiles: (signatureToken: string) => Promise<Uint8Array>;
     /**
      * Returns a PDF or ZIP file with the signed files.
      * @param signatureToken token_requester property from a created signature.
      * @returns PDF or ZIP file with the signed files.
      */
-    downloadSignedFiles: (signatureToken: string) => Promise<DownloadResponse>;
+    downloadSignedFiles: (signatureToken: string) => Promise<Uint8Array>;
     /**
      * Returns a PDF or ZIP file with the audit files that inform about
      * files legitimity.
      * @param signatureToken token_requester property from a created signature.
      * @returns PDF or ZIP file with the audit files.
      */
-    downloadAuditFiles: (signatureToken: string) => Promise<DownloadResponse>;
+    downloadAuditFiles: (signatureToken: string) => Promise<Uint8Array>;
     /**
      * Returns a receiver information related to a specific sign process.
      * @param receiverTokenRequester token_requester from a receiver.
@@ -194,21 +193,21 @@ export default class ILovePDFApi implements ILovePDFApiI {
     /**
      * @inheritdoc
      */
-    async downloadOriginalFiles(signatureToken: string): Promise<DownloadResponse> {
+    async downloadOriginalFiles(signatureToken: string): Promise<Uint8Array> {
         return ILovePDFCoreApi.downloadOriginalFiles(this.auth, this.xhr, signatureToken);
     }
 
     /**
      * @inheritdoc
      */
-    async downloadSignedFiles(signatureToken: string): Promise<DownloadResponse> {
+    async downloadSignedFiles(signatureToken: string): Promise<Uint8Array> {
         return ILovePDFCoreApi.downloadSignedFiles(this.auth, this.xhr, signatureToken);
     }
 
     /**
      * @inheritdoc
      */
-    async downloadAuditFiles(signatureToken: string): Promise<DownloadResponse> {
+    async downloadAuditFiles(signatureToken: string): Promise<Uint8Array> {
         return ILovePDFCoreApi.downloadAuditFiles(this.auth, this.xhr, signatureToken);
     }
 
