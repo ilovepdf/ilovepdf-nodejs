@@ -7,7 +7,7 @@
   },
   "license": "MIT",
   "description": "ILovePDF Api - NodeJS Library",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc && sed 's#dist/##' ./package.json > ./dist/package.json && cp README.md ./dist",
