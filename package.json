@@ -15,7 +15,7 @@
     "upload-npm": "npm test && npm run build && cd ./dist && npm publish --access public"
   },
   "dependencies": {
-    "@ilovepdf/ilovepdf-js-core": "^0.2.0"
+    "@ilovepdf/ilovepdf-js-core": "0.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",
