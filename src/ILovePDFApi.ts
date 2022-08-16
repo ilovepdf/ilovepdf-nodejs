@@ -233,6 +233,7 @@ export default class ILovePDFApi implements ILovePDFApiI {
     }
 
 }
+module.exports = ILovePDFApi;
 
 type ListTasksParams = {
     page?: number;
