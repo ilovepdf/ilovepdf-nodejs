@@ -1,6 +1,6 @@
 import EditTask from '@ilovepdf/ilovepdf-js-core/tasks/edit/EditTask';
 import Text from "@ilovepdf/ilovepdf-js-core/tasks/edit/Text";
-import ILovePDFFile from "@ilovepdf/ilovepdf-js-core/utils/ILovePDFFile";
+import ILovePDFFile from "../ILovePDFFile";
 import dotenv from 'dotenv';
 import fs from 'fs';
 import ILovePDFApi from "..";
