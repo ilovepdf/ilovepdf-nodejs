@@ -29,7 +29,7 @@ npm install @ilovepdf/ilovepdf-nodejs
 ### Using public URLs
 
 ```js
-import ILovePDFApi from '@ilovepdf/ilovepdf-nodejs';
+const ILovePDFApi = require('@ilovepdf/ilovepdf-nodejs');
 
 const instance = new ILovePDFApi('<PUBLIC_KEY>', '<SECRET_KEY>');
 
@@ -40,10 +40,10 @@ const task = instance.newTask('merge');
 // Promise-based way to use ILovePDFApi.
 task.start()
 .then(() => {
-    return task.upload('<FILE_URL>');
+    return task.addFile('<FILE_URL>');
 })
 .then(() => {
-    return task.upload('<FILE_URL>');
+    return task.addFile('<FILE_URL>');
 })
 .then(() => {
     return task.process();
@@ -59,8 +59,8 @@ task.start()
 ### Using ILovePDFFile class
 
 ```js
-import ILovePDFApi from '@ilovepdf/ilovepdf-nodejs';
-import ILovePDFFile from '@ilovepdf/ilovepdf-nodejs/ILovePDFFile';
+const ILovePDFApi = require('@ilovepdf/ilovepdf-nodejs');
+const ILovePDFFile = require('@ilovepdf/ilovepdf-nodejs/ILovePDFFile');
 
 const instance = new ILovePDFApi('<PUBLIC_KEY>', '<SECRET_KEY>');
 
@@ -70,10 +70,10 @@ task.start()
 .then(() => {
     const file = new ILovePDFFile('<FILE_PATH>');
 
-    return task.upload(file);
+    return task.addFile(file);
 })
 .then(() => {
-    return task.upload('<FILE_URL>');
+    return task.addFile('<FILE_URL>');
 })
 .then(() => {
     return task.process();
@@ -93,8 +93,8 @@ Thanks to be a promise-based API it is possible use the `await` JavaScript opera
 ```js
     let task = instance.newTask('merge');
     task = await task.start();
-    task = await task.upload('<FILE_URL>');
-    task = await task.upload('<FILE_URL>');
+    task = await task.addFile('<FILE_URL>');
+    task = await task.addFile('<FILE_URL>');
     task = await task.process();
 
     const data = await task.download();
