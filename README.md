@@ -14,7 +14,7 @@ Requirements to use this library are:
 1. NPM - Package built with version @6.14.5 .
 2. NodeJS - Package built with version @12.18.2 .
 
-You cand download them [here](https://nodejs.org/en).
+You can download them [here](https://nodejs.org/en).
 
 ## Install
 
