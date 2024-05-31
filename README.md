@@ -100,6 +100,51 @@ Thanks to be a promise-based API it is possible use the `await` JavaScript opera
     const data = await task.download();
 ```
 
+### Get PDF information
+
+On upload a file from a local file or URL, you will have access to some PDF information:
+
+```js
+const ILovePDFApi = require('@ilovepdf/ilovepdf-nodejs');
+const ILovePDFFile = require('@ilovepdf/ilovepdf-nodejs/ILovePDFFile');
+
+const instance = new ILovePDFApi('<PUBLIC_KEY>', '<SECRET_KEY>');
+
+const task = instance.newTask('merge');
+
+task.start()
+.then(() => {
+    const file = new ILovePDFFile('<FILE_PATH>');
+
+    return task.addFile(file);
+})
+.then(file1 => {
+    // Access to PDF information.
+    // file1.pageNumber
+    // file1.pageSizes
+
+    // File from URL.
+    return task.addFile('<FILE_URL>');
+})
+.then(file2 => {
+    // Access to PDF information.
+    // file2.pageNumber
+    // file2.pageSizes
+});
+```
+
+### Get remaining files
+
+Due to this library is limited by number of uses, you can access to the account remaining files:
+
+```js
+const task = instance.newTask('merge');
+await task.start();
+// After start a task, you can access to the remaining files quantity.
+// Before, it's `undefined`.
+console.log( task.remainingFiles )
+```
+
 ## Documentation
 
 Please see https://developer.ilovepdf.com/docs for up-to-date documentation.

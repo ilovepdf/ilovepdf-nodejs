@@ -14,6 +14,78 @@ const api = new ILovePDFApi(process.env.PUBLIC_KEY!, process.env.SECRET_KEY!);
 
 describe('ILovePDFApi', () => {
 
+    it('gets the remaining files', async () => {
+        const task = api.newTask('merge');
+
+        await task.start()
+
+        // Be careful with this test. In case of being an admin, `remainingFiles`
+        // is `undefined` due to they have no limits.
+        expect( typeof task.remainingFiles === 'number' ).toBeTruthy()
+    });
+
+    it('does not get the pdfinfo', async () => {
+        const task = api.newTask('merge');
+
+        await task.start()
+
+        const file = await task.addFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf');
+
+        // Be careful with this test. In case of being an admin, `remainingFiles`
+        // is `undefined` due to they have no limits.
+        expect(file.info).toBeUndefined()
+    });
+
+    it('does not get the pdfinfo with local file', async () => {
+        const task = api.newTask('merge');
+
+        await task.start()
+
+        const file = new ILovePDFFile(path.resolve(__dirname, './tests/input/sample.pdf'));
+        await task.addFile(file, { info: false });
+
+        // Be careful with this test. In case of being an admin, `remainingFiles`
+        // is `undefined` due to they have no limits.
+        expect(file.info).toBeUndefined()
+    });
+
+    it('does not get the pdfinfo if specified', async () => {
+        const task = api.newTask('merge');
+
+        await task.start()
+
+        const file = await task.addFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', { info: false });
+
+        // Be careful with this test. In case of being an admin, `remainingFiles`
+        // is `undefined` due to they have no limits.
+        expect(file.info).toBeUndefined()
+    });
+
+    it('gets the pdfinfo if specified', async () => {
+        const task = api.newTask('merge');
+
+        await task.start()
+
+        const file = await task.addFile('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', { info: true });
+
+        // Be careful with this test. In case of being an admin, `remainingFiles`
+        // is `undefined` due to they have no limits.
+        expect(file.info).toBeDefined()
+    });
+
+    it('gets the pdfinfo if specified with file', async () => {
+        const task = api.newTask('merge');
+
+        await task.start()
+
+        const file = new ILovePDFFile(path.resolve(__dirname, './tests/input/sample.pdf'));
+        await task.addFile(file, { info: true });
+
+        // Be careful with this test. In case of being an admin, `remainingFiles`
+        // is `undefined` due to they have no limits.
+        expect(file.info).toBeDefined()
+    });
+
     it('gets a list of Task', () => {
         const task = api.newTask('merge');
 
