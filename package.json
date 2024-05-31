@@ -7,7 +7,7 @@
   },
   "license": "MIT",
   "description": "ILovePDF Api - NodeJS Library",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc && sed 's#dist/##' ./package.json > ./dist/package.json && cp README.md ./dist",
@@ -15,7 +15,7 @@
     "upload-npm": "npm test && npm run build && cd ./dist && npm publish --access public"
   },
   "dependencies": {
-    "@ilovepdf/ilovepdf-js-core": "~0.2.0"
+    "@ilovepdf/ilovepdf-js-core": "0.2.5"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",
