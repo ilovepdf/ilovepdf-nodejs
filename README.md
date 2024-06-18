@@ -92,10 +92,10 @@ Thanks to be a promise-based API it is possible use the `await` JavaScript opera
 
 ```js
     let task = instance.newTask('merge');
-    task = await task.start();
-    task = await task.addFile('<FILE_URL>');
-    task = await task.addFile('<FILE_URL>');
-    task = await task.process();
+    await task.start();
+    await task.addFile('<FILE_URL>');
+    await task.addFile('<FILE_URL>');
+    await task.process();
 
     const data = await task.download();
 ```
