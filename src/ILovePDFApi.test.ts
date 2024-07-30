@@ -253,7 +253,7 @@ describe('ILovePDFApi', () => {
 
             await task.process();
 
-            const signatureList = await api.getSignatureList(0, 2);
+            const signatureList = await api.getSignatureList(0, 2, {sort_direction: 'desc'});
 
             const paquitoName = signatureList[0].signers[0].name;
 

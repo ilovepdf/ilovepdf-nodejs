@@ -165,8 +165,8 @@ export default class ILovePDFApi implements ILovePDFApiI {
     /**
      * @inheritdoc
      */
-    async getSignatureList(page: number = 0, pageLimit: number = 20): Promise<Array<GetSignatureStatus>> {
-        return ILovePDFCoreApi.getSignatureList(this.auth, this.xhr, page, pageLimit);
+    async getSignatureList(page: number = 0, pageLimit: number = 20, filters?: any): Promise<Array<GetSignatureStatus>> {
+        return ILovePDFCoreApi.getSignatureList(this.auth, this.xhr, page, pageLimit, filters);
     }
 
     /**
