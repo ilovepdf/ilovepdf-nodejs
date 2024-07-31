@@ -118,15 +118,18 @@ export default class ILovePDFApi implements ILovePDFApiI {
     async listTasks(params: ListTasksParams = {}) {
         const token = await this.auth.getToken();
 
+        const data = {
+            secret_key: this.auth.secretKey,
+            ...params
+        }
+
         return this.xhr.post<ListTasksResponse>(
             `${ globals.API_URL_PROTOCOL }://${ globals.API_URL }/${ globals.API_VERSION }/task`,
-            {
-                secret_key: this.auth.secretKey,
-                ...params
-            },
+            JSON.stringify(data),
             {
                 headers: [
-                    [ 'Authorization', `Bearer ${ token }` ]
+                    [ 'Authorization', `Bearer ${ token }` ],
+                    [ 'Content-Type', 'application/json' ]
                 ],
                 transformResponse: (res: any) => { return JSON.parse(res) }
             }
