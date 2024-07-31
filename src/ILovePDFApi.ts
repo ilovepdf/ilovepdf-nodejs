@@ -7,7 +7,7 @@ import XHRInterface from '@ilovepdf/ilovepdf-js-core/utils/XHRInterface';
 import globals from '@ilovepdf/ilovepdf-js-core/constants/globals.json';
 import TaskI from "@ilovepdf/ilovepdf-js-core/tasks/TaskI";
 import TaskTypeNotExistsError from '@ilovepdf/ilovepdf-js-core/errors/TaskTypeNotExistsError';
-import ILovePDFCoreApi, { GetSignatureStatus, GetReceiverInfoResponse } from '@ilovepdf/ilovepdf-js-core/ILovePDFCoreApi';
+import ILovePDFCoreApi, { GetSignatureStatus, GetReceiverInfoResponse, SignatureListFilters } from '@ilovepdf/ilovepdf-js-core/ILovePDFCoreApi';
 
 export interface ILovePDFApiI {
     /**
@@ -168,7 +168,7 @@ export default class ILovePDFApi implements ILovePDFApiI {
     /**
      * @inheritdoc
      */
-    async getSignatureList(page: number = 0, pageLimit: number = 20, filters?: any): Promise<Array<GetSignatureStatus>> {
+    async getSignatureList(page: number = 0, pageLimit: number = 20, filters?: SignatureListFilters): Promise<Array<GetSignatureStatus>> {
         return ILovePDFCoreApi.getSignatureList(this.auth, this.xhr, page, pageLimit, filters);
     }
 
