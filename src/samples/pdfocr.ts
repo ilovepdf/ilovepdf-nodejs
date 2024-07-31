@@ -1,7 +1,7 @@
 import ILovePDFApi from "..";
 import fs from 'fs';
 import dotenv from 'dotenv';
-import ImagePdfTask from '@ilovepdf/ilovepdf-js-core/tasks/ImagePdfTask';
+import PdfOcrTask from '@ilovepdf/ilovepdf-js-core/tasks/PdfOcrTask';
 import ILovePDFFile from '../ILovePDFFile';
 
 
@@ -10,7 +10,7 @@ dotenv.config();
 
 const instance = new ILovePDFApi(process.env.PUBLIC_KEY!, process.env.SECRET_KEY!);
 
-const task = instance.newTask('pdfocr') as ImagePdfTask;
+const task = instance.newTask('pdfocr') as PdfOcrTask;
 
 task.start()
     .then(() => {
