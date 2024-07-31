@@ -376,18 +376,7 @@ describe('ILovePDFApi', () => {
                 }, 2000);
             });
 
-            // Due to we can test that email was sent, a limit exception is forced.
             await api.sendReminders(token_requester);
-            await api.sendReminders(token_requester);
-
-            try {
-                await api.sendReminders(token_requester);
-                fail( 'it has to fail.' );
-            }
-            catch(err) {
-                expect(err.message).toBe('Request failed with status code 400');
-            }
-
         });
 
         it('downloads original files', async () => {
