@@ -6,6 +6,7 @@ import path from 'path';
 import SignTask from '@ilovepdf/ilovepdf-js-core/tasks/sign/SignTask';
 import SignatureFile from '@ilovepdf/ilovepdf-js-core/tasks/sign/elements/SignatureFile';
 import Signer from '@ilovepdf/ilovepdf-js-core/tasks/sign/receivers/Signer';
+import fs from 'fs';
 
 // Load env vars.
 dotenv.config();
@@ -119,7 +120,7 @@ describe('ILovePDFApi', () => {
         const file1 = new ILovePDFFile(path.resolve(__dirname, './tests/input/sample.pdf'));
         await task.addFile(file1);
 
-        const file2 = new ILovePDFFile(path.resolve(__dirname, './tests/input/sample.pdf'));
+        const file2 = ILovePDFFile.fromArray(fs.readFileSync(path.resolve(__dirname, './tests/input/sample.pdf')), 'sample.pdf');
         await task.addFile(file2);
 
         await task.process();
